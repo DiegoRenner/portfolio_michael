@@ -43,20 +43,51 @@ function getPosition(el) {
 
 
 function updatePosition() {
-//	while (true) {
-		sleep(5000);
-		var myElement = document.getElementById("7"); 
-		var position = getPosition(myElement);
-		//alert("The image is located at: " + position.x + ", " + position.y);
-		document.getElementById("debugging").innerHTML = position.y;
-//	}
-
+	//	while (true) {
+	sleep(5000);
+	var myElement = document.getElementById("7"); 
+	var position = getPosition(myElement);
+	//alert("The image is located at: " + position.x + ", " + position.y);
+	//	}
+	// document.getElementById("debugging").innerHTML = position.x;
 	// add your code to update the position when your browser
 	// is resized or scrolled
 }
 
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var id = null;
+function myMove() {
+	var elem = document.getElementById("background");
+	var pos = elem.style.top;
+	clearInterval(id);
+	id = setInterval(frame, 5);
+	function frame() {
+	var height = elem.offsetHeight;
+		if (pos <= -height/3) {
+			// clearInterval(id);
+			pos = 0;
+		} else {
+			pos--;
+			elem.style.top = pos + 'px';
+			// elem.style.left = pos + 'px';
+		}
+	}
+}
+
+function addImages() {
+	var elem = document.getElementById("background");
+	var height = elem.offsetHeight;
+	document.getElementById("debugging").innerHTML = height + " " + screen.height;
+	var i;
+	for (i = 0; i < 3; i++) {
+		document.getElementById("debugging").innerHTML = height + " " + screen.height;
+		var images = document.createElement("image_set");
+		elem.appendChild(images);
+		var height = elem.offsetHeight;
+	}
 }
 
 

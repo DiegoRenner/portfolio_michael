@@ -23,10 +23,11 @@
 	<p id=debugging> </p>
 	<div class=container>
 		<div id="background" class=sliding_background>	
-
+		<div class="image_set">
 		<?php
-		$query = mysqli_query($dbconnect, "SELECT * FROM images")
+		$query = mysqli_query($dbconnect, "SELECT * FROM images order by RAND()")
 		   or die (mysqli_error($dbconnect));
+		$database = mysqli_fetch_all($query);
 
 		$n_entries = 0;
 		while ($row = mysqli_fetch_array($query)) {
@@ -42,12 +43,15 @@
 			}
 		$n_entries = $n_entries + 1;
 		}
+		?>
 		
-		?>	
+	</div>
 	</div>
 	</div>
 	<script>
+		addImages();
 		setInterval(updatePosition(),500);
+		myMove();
 	</script>
 	<!-- The expanding image container -->
 	<div class="img_container">
