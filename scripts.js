@@ -64,9 +64,11 @@ function sleep(ms) {
 var id = null;
 function myMove() {
 	var height = 0;
+	var row = document.getElementById("row1");
+	var row_height = row.offsetHeight;
 	for (var i = 0; i < rows_to_fill_page; i++) {
 		row_id = "row" + i;
-		var row = document.getElementById(row_id);
+		row = document.getElementById(row_id);
 		height += row.offsetHeight;
 	}
 	var container = document.getElementById("background");
@@ -112,7 +114,7 @@ function myMove() {
 				image_container.src = dir_array[inner_index];
 			}
 		} else {
-			pos -= 4;
+			pos -= row_height/90;
 			container.style.top = pos + 'px';
 			// elem.style.left = pos + 'px';
 		}
