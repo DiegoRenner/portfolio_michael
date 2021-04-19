@@ -1,3 +1,6 @@
+var indices = [];
+var dir_array = [];
+var rows_to_fill_page = 0;
 function myFunction(imgs) {
 	// Get the expanded image 
 	var expandImg = document.getElementById("expandedImg");
@@ -49,7 +52,7 @@ function updatePosition() {
 	var position = getPosition(myElement);
 	//alert("The image is located at: " + position.x + ", " + position.y);
 	//	}
-	// document.getElementById("debugging").innerHTML = position.x;
+	//document.getElementById("debugging").innerHTML = position.x;
 	// add your code to update the position when your browser
 	// is resized or scrolled
 }
@@ -60,18 +63,57 @@ function sleep(ms) {
 
 var id = null;
 function myMove() {
-	var elem = document.getElementById("background");
-	var pos = elem.style.top;
+	var height = 0;
+	for (var i = 0; i < rows_to_fill_page; i++) {
+		row_id = "row" + i;
+		var row = document.getElementById(row_id);
+		height += row.offsetHeight;
+	}
+	var container = document.getElementById("background");
+	var pos = container.style.top;
 	clearInterval(id);
-	id = setInterval(frame, 5);
+	id = setInterval(frame, 15);
 	function frame() {
-	var height = elem.offsetHeight;
-		if (pos <= -height/3) {
+	document.getElementById("debugging").innerHTML = height + " " + pos + " " + rows_to_fill_page + " " + window.innerHeight;
+		if (pos <= -height) {
 			// clearInterval(id);
+			//image_set_container.innerHTML = "";
+			//document.getElementById("debugging").innerHTML = dir_array;
+			//indices.splice(0,6);
+			var entries_to_move = (rows_to_fill_page-1)*6;
+			for (var i = 0; i < entries_to_move; i++){
+				indices[i] = indices[i+entries_to_move];
+				//indices.push(Math.floor(Math.random() * dir_array.length));
+		}
+			for (var i = 0; i < indices.length; i++) {
+				var img_id = "img" + i;
+				var image_container = document.getElementById(img_id);
+				//alert(image_container)
+				var inner_index = indices[i];
+				//alert(inner_index)
+				image_container.src = dir_array[inner_index];
+			}
+				//if (n_pictures >=24) {
+				//	break;
+				//}
 			pos = 0;
+			container.style.top = pos + 'px';
+			var new_entries = indices.length-entries_to_move;
+			indices.splice((rows_to_fill_page-1)*6, new_entries)
+			for (var i = 0; i < new_entries; i++){
+				indices.push(Math.floor(Math.random() * dir_array.length));
+			}
+			for (var i = entries_to_move; i < indices.length; i++) {
+				var img_id = "img" + i;
+				var image_container = document.getElementById(img_id);
+				//alert(image_container)
+				var inner_index = indices[i];
+				//alert(inner_index)
+				image_container.src = dir_array[inner_index];
+			}
 		} else {
-			pos--;
-			elem.style.top = pos + 'px';
+			pos -= 4;
+			container.style.top = pos + 'px';
 			// elem.style.left = pos + 'px';
 		}
 	}
@@ -80,10 +122,10 @@ function myMove() {
 function addImages() {
 	var elem = document.getElementById("background");
 	var height = elem.offsetHeight;
-	document.getElementById("debugging").innerHTML = height + " " + screen.height;
+	//document.getElementById("debugging").innerHTML = height + " " + screen.height;
 	var i;
 	for (i = 0; i < 3; i++) {
-		document.getElementById("debugging").innerHTML = height + " " + screen.height;
+		//document.getElementById("debugging").innerHTML = height + " " + screen.height;
 		var images = document.createElement("image_set");
 		elem.appendChild(images);
 		var height = elem.offsetHeight;
@@ -91,5 +133,49 @@ function addImages() {
 }
 
 
+function fillImageSetContainer(dir_array) {
+	this.dir_array = dir_array;
+	var image_set_container = document.getElementById("image_set_container");
+	var background = document.getElementById("background");
+	//document.getElementById("debugging").innerHTML = dir_array;
+	var page_full = false;
+	var second_page_full = false;
+	var page_almost_full = false;
+	var n_pictures = 0;
+	var n_rows = 0;
+	var rows_to_fill_unset = true;
+	while (!second_page_full) {
+			//alert(height);
+			//alert(window.innerHeight);
+		if ( n_pictures%6 == 0) {
+			image_set_container.innerHTML += "<div id=row" + n_rows + " class='row'>";
+			n_rows++;
+		}
+			
+		indices.push(Math.floor(Math.random() * dir_array.length));
+		image_set_container.innerHTML += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[indices[indices.length-1]] +" alt='Nature' onclick='myFunction(this);'>\n </div>\n";
+		if ( n_pictures%6 == 5) {
+			image_set_container.innerHTML += "</div>";
+			var height = image_set_container.offsetHeight;
+			/*if (page_almost_full) {
+				page_full = true;
+			}
+			page_almost_full = height > screen.height;*/
+			page_full = height > window.innerHeight;
+			second_page_full= height > 2*window.innerHeight;
+			if (page_full && rows_to_fill_unset) {
+				rows_to_fill_page = n_rows;
+				rows_to_fill_unset = false;
+
+			}
+			document.getElementById("debugging").innerHTML = height + " " + screen.height;
+		}
+		n_pictures++;
+		//if (n_pictures >=24) {
+		//	break;
+		//}
+
+	}
+}
 
 
