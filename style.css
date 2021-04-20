@@ -150,4 +150,22 @@ body,html {
 	z-index:1;
 }
 
+.main_menu {
+	position:fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	z-index:1;
+	border-radius: 25px;
+	background: black;
+	padding: 20px; 
+	width: 30%;
+	height:13%;  
+	opacity: 0.8;
+}
 
+.main_menu:hover {
+	opacity: 1.0;
+}

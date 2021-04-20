@@ -22,6 +22,8 @@
 	?>
 	<p id=debugging> </p>
 	<div class=container>
+		<div class=main_menu>
+		</div>
 		<div id="background" class=sliding_background>	
 		<div id="image_set_container" class="image_set_container">
 	</div>
