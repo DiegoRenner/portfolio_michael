@@ -105,10 +105,41 @@ function myMove() {
 			pos = 0;
 			container.style.top = pos + 'px';
 			var new_entries = indices.length-entries_to_move;
+			var images_in_db = dir_array.length;
 			indices.splice((rows_to_fill_page)*6, new_entries)
-			for (var i = 0; i < new_entries; i++){
-				indices.push(Math.floor(Math.random() * dir_array.length));
+			for (var i = 0; i < new_entries/6-1; i++){
+				var perm_indices=[];
+				var seq_indices=[];
+				var j = 0;
+				if (i%2 == 0){
+				for (j = 0; j < images_in_db; j++) {
+					seq_indices.push(j);
+				}
+					j = images_in_db;
+				while (j--) {
+					    k = Math.floor(Math.random() * (j+1));
+					    perm_indices.push(seq_indices[k]);
+					    seq_indices.splice(k,1);
+				}
+				indices.push(...perm_indices);
+				}
 			}
+			if (new_entries/6%2 == 1){
+				var perm_indices=[];
+				var seq_indices=[];
+				var j = 0;
+				for (j = 0; j < images_in_db; j++) {
+					seq_indices.push(j);
+				}
+				j = 6
+				while (j--) {
+					    k = Math.floor(Math.random() * (j+1));
+					    perm_indices.push(seq_indices[k]);
+					    seq_indices.splice(k,1);
+				}
+				indices.push(...perm_indices);
+			}
+
 			for (var i = entries_to_move; i < indices.length; i++) {
 				var img_id = "img" + i;
 				var image_container = document.getElementById(img_id);
@@ -157,15 +188,32 @@ function fillImageSetContainer(dir_array, height_array) {
 	var safety = false;
 	indices = [];
 	image_set_container.innerHTML = "";
+	var images_in_db = dir_array.length;
+	var seq_indices = [];
+	var perm_indices = [];
+	var count_indices = 0;
 	while (!finished) {
 			//alert(window.innerHeight);
 		if ( n_pictures%6 == 0) {
 			row_string += "<div id=row" + n_rows + " class='row'>\n";
 			n_rows++;
+			if ( n_pictures%12 == 0) {
+			row_string += "<div id=row" + n_rows + " class='row'>\n";
+			var i =0;
+			for (i = 0; i < images_in_db; i++) {
+				seq_indices.push(i);
+			}
+			perm_indices=[];
+			while (i--) {
+				    j = Math.floor(Math.random() * (i+1));
+				    perm_indices.push(seq_indices[j]);
+				    seq_indices.splice(j,1);
+			}
+			count_indices = 0;
+			}
 		}
-			
-		indices.push(Math.floor(Math.random() * dir_array.length));
-		row_string += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[indices[indices.length-1]] +" height=" + window.innerWidth/6*Math.sqrt(2) + " alt='Nature' onclick='myFunction(this);'>\n </div>\n";
+		indices.push(perm_indices[count_indices]);	
+		row_string += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[perm_indices[count_indices]] +" height=" + window.innerWidth/6*Math.sqrt(2) + " alt='Nature' onclick='myFunction(this);'>\n </div>\n";
 		if ( n_pictures%6 == 5) {
 			row_string += "</div>";
 			var test = test;
@@ -190,6 +238,7 @@ function fillImageSetContainer(dir_array, height_array) {
 			document.getElementById("debugging").innerHTML = height + " " + screen.height;
 		}
 		n_pictures++;
+		count_indices++;
 		//if (n_pictures >=24) {
 		//	break;
 		//}
