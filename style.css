@@ -44,7 +44,7 @@ hr { display: block; height: 1px;
 /* The grid: Four equal columns that floats next to each other */
 
 /* remove margins and paddings everywhere */
-/* so 100vh doesn't make vh appear */
+/* so 100vh doesn't make scrollbar appear */
 body,html {
        	margin: 0;
        	padding: 0;
@@ -55,9 +55,8 @@ body,html {
 	
 
 .column {
-        float: left;
-        width: calc(100%/6);
-        padding: 0px;
+        float: left; 
+	width: calc(100%/6);
 	
 }
 
@@ -66,24 +65,26 @@ body,html {
         opacity: 0.8;
         cursor: pointer;
 	width: 100%;
-	padding: 0px;
 }
 
 .column img:hover {
         opacity: 1;
 }
 
+.row {
+}
 /* Clear floats after the columns */
 .row:after {
         content: "";
         display: table;
         clear: both;
-	padding: 0px;
+	/*padding-bottom:23.5702260396%;*/
 }
+
 
 /* The expanding image container (positioning is needed to position the close button and the text) */
 .img_container {
-       	position: absolute;
+       	/*position: absolute;*/
        	display: none;
 	padding: 0px;
 }

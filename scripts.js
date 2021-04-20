@@ -1,5 +1,7 @@
 var indices = [];
+var id = null;
 var dir_array = [];
+var height_array = [];
 var rows_to_fill_page = 0;
 function myFunction(imgs) {
 	// Get the expanded image 
@@ -61,28 +63,30 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-var id = null;
 function myMove() {
-	var height = 0;
-	var row = document.getElementById("row1");
-	var row_height = row.offsetHeight;
-	for (var i = 0; i < rows_to_fill_page; i++) {
-		row_id = "row" + i;
-		row = document.getElementById(row_id);
-		height += row.offsetHeight;
-	}
 	var container = document.getElementById("background");
-	var pos = container.style.top;
-	clearInterval(id);
+	var pos = 0;
+	container.style.top = pos + 'px';
+
+	//clearInterval(id);
 	id = setInterval(frame, 15);
 	function frame() {
-	document.getElementById("debugging").innerHTML = height + " " + pos + " " + rows_to_fill_page + " " + window.innerHeight;
+			container = document.getElementById("background");
+		
+		var height = 0;
+		for (var i = 0; i < rows_to_fill_page; i++) {
+			row_id = "row" + i;
+			row = document.getElementById(row_id);
+			height += row.offsetHeight;
+		}
+		var row_height = height/rows_to_fill_page;
+		document.getElementById("debugging").innerHTML = height + " " + pos + " " + rows_to_fill_page + " " + window.innerHeight;
 		if (pos <= -height) {
 			// clearInterval(id);
 			//image_set_container.innerHTML = "";
 			//document.getElementById("debugging").innerHTML = dir_array;
 			//indices.splice(0,6);
-			var entries_to_move = (rows_to_fill_page-1)*6;
+			var entries_to_move = (rows_to_fill_page)*6;
 			for (var i = 0; i < entries_to_move; i++){
 				indices[i] = indices[i+entries_to_move];
 				//indices.push(Math.floor(Math.random() * dir_array.length));
@@ -101,7 +105,7 @@ function myMove() {
 			pos = 0;
 			container.style.top = pos + 'px';
 			var new_entries = indices.length-entries_to_move;
-			indices.splice((rows_to_fill_page-1)*6, new_entries)
+			indices.splice((rows_to_fill_page)*6, new_entries)
 			for (var i = 0; i < new_entries; i++){
 				indices.push(Math.floor(Math.random() * dir_array.length));
 			}
@@ -135,8 +139,10 @@ function addImages() {
 }
 
 
-function fillImageSetContainer(dir_array) {
+function fillImageSetContainer(dir_array, height_array) {
+
 	this.dir_array = dir_array;
+	this.height_array = height_array;
 	var image_set_container = document.getElementById("image_set_container");
 	var background = document.getElementById("background");
 	//document.getElementById("debugging").innerHTML = dir_array;
@@ -146,18 +152,25 @@ function fillImageSetContainer(dir_array) {
 	var n_pictures = 0;
 	var n_rows = 0;
 	var rows_to_fill_unset = true;
-	while (!second_page_full) {
-			//alert(height);
+	var row_string = "";
+	var finished = false;
+	var safety = false;
+	indices = [];
+	image_set_container.innerHTML = "";
+	while (!finished) {
 			//alert(window.innerHeight);
 		if ( n_pictures%6 == 0) {
-			image_set_container.innerHTML += "<div id=row" + n_rows + " class='row'>";
+			row_string += "<div id=row" + n_rows + " class='row'>\n";
 			n_rows++;
 		}
 			
 		indices.push(Math.floor(Math.random() * dir_array.length));
-		image_set_container.innerHTML += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[indices[indices.length-1]] +" alt='Nature' onclick='myFunction(this);'>\n </div>\n";
+		row_string += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[indices[indices.length-1]] +" height=" + window.innerWidth/6*Math.sqrt(2) + " alt='Nature' onclick='myFunction(this);'>\n </div>\n";
 		if ( n_pictures%6 == 5) {
-			image_set_container.innerHTML += "</div>";
+			row_string += "</div>";
+			var test = test;
+			image_set_container.innerHTML += row_string;
+			row_string = ""
 			var height = image_set_container.offsetHeight;
 			/*if (page_almost_full) {
 				page_full = true;
@@ -165,6 +178,10 @@ function fillImageSetContainer(dir_array) {
 			page_almost_full = height > screen.height;*/
 			page_full = height > window.innerHeight;
 			second_page_full= height > 2*window.innerHeight;
+			finished = second_page_full && safety; 
+			if (second_page_full) {
+				safety=true;
+			}
 			if (page_full && rows_to_fill_unset) {
 				rows_to_fill_page = n_rows;
 				rows_to_fill_unset = false;

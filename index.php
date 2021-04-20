@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="scripts.js"></script>
 </head>
-<body>
+<body onresize="clearInterval(id); fillImageSetContainer(dir_array, height_array); myMove();">
 	<?php
 
 	$hostname = "localhost";
@@ -38,7 +38,17 @@
 		} 
 ?>
 ];
-		fillImageSetContainer(dir_array);
+		var height_array = [ 
+<?php
+		$query = mysqli_query($dbconnect, "SELECT * FROM images") 
+			or die (mysqli_error($dbconnect)); 
+		while ($row = mysqli_fetch_array($query)) { 
+			$dir = $row["height"]; 
+			echo "'$dir',"; 
+		} 
+?>
+];
+		fillImageSetContainer(dir_array, height_array);
 		//setInterval(updatePosition(),500);
 		myMove();
 	</script>
