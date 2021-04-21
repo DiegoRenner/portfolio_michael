@@ -23,6 +23,15 @@
 	<p id=debugging> </p>
 	<div class=container>
 		<div class=main_menu>
+			<div class="menu_button left">
+				<p> Projects </p>
+			</div>
+			<div class="menu_button right">
+				<p> Biography </p>
+			</div>
+			<div class="menu_button center">
+				<p> Search </p>
+			</div>
 		</div>
 		<div id="background" class=sliding_background>	
 		<div id="image_set_container" class="image_set_container">

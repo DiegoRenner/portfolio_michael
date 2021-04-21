@@ -151,7 +151,17 @@ body,html {
 }
 
 .main_menu {
-	position:fixed;
+	position: absolute;
+	z-index:1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40%;
+	height:25%;  
+	border-radius: 25px;
+	background:black;
+	opacity: 0.8;
+	/*position:fixed;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -160,12 +170,43 @@ body,html {
 	z-index:1;
 	border-radius: 25px;
 	background: black;
-	padding: 20px; 
 	width: 30%;
 	height:13%;  
-	opacity: 0.8;
+	*/
 }
 
 .main_menu:hover {
 	opacity: 1.0;
+}
+
+.menu_button {
+	position: absolute;
+	z-index:2;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 25%;
+	height:33%;  
+	border-color: black;
+	border-radius: 25px;
+	border-style: double;
+	border-width: 10px;
+	background:white;
+}
+.menu_button p {
+	position: absolute;
+	margin: 0;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+
+}
+.left {
+	left: 5%;
+}
+.right {
+	right: 5%;
+}
+.center {
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
