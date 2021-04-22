@@ -33,6 +33,24 @@
 				<p> Search </p>
 			</div>
 		</div>
+		<div class=menu_dropdown>
+		<div class=menu_dropdown_button>
+				<p> Project 1 </p>
+		</div>
+		<div class=menu_dropdown_button>
+				<p> Project 2 </p>
+		</div>
+		<div class=menu_dropdown_button>
+				<p> Project 3 </p>
+		</div>
+		<div class=menu_dropdown_button>
+				<p> Project 4 </p>
+		</div>
+		<div class=menu_dropdown_button>
+				<p> Project 5 </p>
+		</div>
+		</div>
+		</div>
 		<div id="background" class=sliding_background>	
 		<div id="image_set_container" class="image_set_container">
 	</div>

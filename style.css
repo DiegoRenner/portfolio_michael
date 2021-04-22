@@ -210,3 +210,32 @@ body,html {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+.menu_dropdown {
+	opacity: 0.8;
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 30%;
+	height: 35%;
+	z-index: 3;
+	background: black;
+}
+.menu_dropdown:hover {
+	opacity: 1.0;
+}
+.menu_dropdown_button {
+	position: relative;
+	margin-top: 5%;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 10%;
+	width: 90%;
+	background: white;
+}
+.menu_dropdown_button p {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: 3%;
+}
