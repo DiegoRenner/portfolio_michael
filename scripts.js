@@ -1,8 +1,10 @@
 var indices = [];
 var id = null;
+var id1 = null;
 var dir_array = [];
 var height_array = [];
 var rows_to_fill_page = 0;
+var project_dropdown_toggle = false
 function myFunction(imgs) {
 	// Get the expanded image 
 	var expandImg = document.getElementById("expandedImg");
@@ -197,8 +199,8 @@ function fillImageSetContainer(dir_array, height_array) {
 		if ( n_pictures%6 == 0) {
 			row_string += "<div id=row" + n_rows + " class='row'>\n";
 			n_rows++;
-			if ( n_pictures%12 == 0) {
-			row_string += "<div id=row" + n_rows + " class='row'>\n";
+			//if ( n_pictures%12 == 0) {
+			//row_string += "<div id=row" + n_rows + " class='row'>\n";
 			var i =0;
 			for (i = 0; i < images_in_db; i++) {
 				seq_indices.push(i);
@@ -210,7 +212,7 @@ function fillImageSetContainer(dir_array, height_array) {
 				    seq_indices.splice(j,1);
 			}
 			count_indices = 0;
-			}
+			//}
 		}
 		indices.push(perm_indices[count_indices]);	
 		row_string += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[perm_indices[count_indices]] +" height=" + window.innerWidth/6*Math.sqrt(2) + " alt='Nature' onclick='myFunction(this);'>\n </div>\n";
@@ -225,7 +227,7 @@ function fillImageSetContainer(dir_array, height_array) {
 			}
 			page_almost_full = height > screen.height;*/
 			page_full = height > window.innerHeight;
-			second_page_full= height > 2*window.innerHeight;
+			second_page_full = height > 2*window.innerHeight;
 			finished = second_page_full && safety; 
 			if (second_page_full) {
 				safety=true;
@@ -246,4 +248,28 @@ function fillImageSetContainer(dir_array, height_array) {
 	}
 }
 
+function dropdown_menu() {
+
+	var menu_dropdown = document.getElementById("menu_dropdown")
+	var pos1 = menu_dropdown.offsetTop;
+	//alert(menu_dropdown.style.top)
+
+	if (project_dropdown_toggle){
+		menu_dropdown.style.top = -menu_dropdown.offsetHeight + "px";
+		project_dropdown_toggle = false
+	} else {
+		id1 = setInterval(frame, 15);
+		function frame() {
+			pos1 = menu_dropdown.offsetTop
+			if (pos1 < 0) {
+				pos1 = pos1 + 7;
+				menu_dropdown.style.top = pos1 + "px";
+			} else {
+				clearInterval(id1);
+			}
+		}
+		project_dropdown_toggle = true
+	}
+
+}
 
