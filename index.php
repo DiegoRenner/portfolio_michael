@@ -38,18 +38,6 @@ if ($dbconnect->connect_error) {
             <div  class=menu_dropdown_button>
                 <p> Project 1 </p>
             </div>
-            <div class=menu_dropdown_button>
-                <p> Project 2 </p>
-            </div>
-            <div class=menu_dropdown_button>
-                <p> Project 3 </p>
-            </div>
-            <div class=menu_dropdown_button>
-                <p> Project 4 </p>
-            </div>
-            <div class=menu_dropdown_button>
-                <p> Project 5 </p>
-            </div>
         </div>
     </div>
     <div id="background" class=sliding_background>
@@ -78,7 +66,29 @@ if ($dbconnect->connect_error) {
         }
         ?>
     ];
+    var project_names = [
+        <?php
+        $query = mysqli_query($dbconnect, "SELECT * FROM projects")
+        or die (mysqli_error($dbconnect));
+        while ($row = mysqli_fetch_array($query)) {
+            $dir = $row["name"];
+            echo "'$dir',";
+        }
+        ?>
+    ];
+    var project_ids = [
+        <?php
+        $query = mysqli_query($dbconnect, "SELECT * FROM projects")
+        or die (mysqli_error($dbconnect));
+        while ($row = mysqli_fetch_array($query)) {
+            $dir = $row["id"];
+            echo "'$dir',";
+        }
+        ?>
+    ];
+
     fillImageSetContainer(dir_array, height_array);
+    fillDropdownMenu(project_names,project_ids)
     //setInterval(updatePosition(),500);
     myMove();
 </script>

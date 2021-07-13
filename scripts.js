@@ -273,3 +273,12 @@ function dropdown_menu() {
 
 }
 
+function fillDropdownMenu(project_names, project_ids) {
+
+	var menu_dropdown = document.getElementById("menu_dropdown");
+	menu_dropdown.innerHTML = "";
+	num_projects = project_names.length
+	for (var i = 0; i<num_projects; i++ ) {
+		menu_dropdown.innerHTML += "<div class= menu_dropdown_button> \n <p>" + project_names[i] +"</p> \n </div>"
+	}
+}
