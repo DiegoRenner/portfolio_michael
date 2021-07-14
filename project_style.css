@@ -1,0 +1,29 @@
+.gallery {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100%;
+}
+.gallery img{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+.text {
+    position: absolute;
+    background: black;
+    top: 0;
+    left: 35%;
+    width: 65%;
+    height: 100%;
+}
+
+.text p{
+    position: absolute;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 5%;
+}
