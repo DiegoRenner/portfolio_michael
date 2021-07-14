@@ -279,6 +279,7 @@ function fillDropdownMenu(project_names, project_ids) {
 	menu_dropdown.innerHTML = "";
 	num_projects = project_names.length
 	for (var i = 0; i<num_projects; i++ ) {
-		menu_dropdown.innerHTML += "<div class= menu_dropdown_button> \n <p>" + project_names[i] +"</p> \n </div>"
+		link="location.href='project.php?project_id=" + project_ids[i] + "';"
+		menu_dropdown.innerHTML += "<div onclick="+link+" class= menu_dropdown_button> \n <p>" + project_names[i] +"</p> \n </div>"
 	}
 }
