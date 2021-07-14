@@ -35,9 +35,6 @@ if ($dbconnect->connect_error) {
     </div>
     <div class="dropdown_container">
         <div id="menu_dropdown" class=menu_dropdown>
-            <div  class=menu_dropdown_button>
-                <p> Project 1 </p>
-            </div>
         </div>
     </div>
     <div id="background" class=sliding_background>
