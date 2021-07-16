@@ -5,6 +5,8 @@ var dir_array = [];
 var height_array = [];
 var rows_to_fill_page = 0;
 var project_dropdown_toggle = false
+var search_dropdown_toggle = false
+var result_dropdown_toggle = false
 function myFunction(imgs) {
 	// Get the expanded image 
 	var expandImg = document.getElementById("expandedImg");
@@ -52,7 +54,7 @@ function getPosition(el) {
 function updatePosition() {
 	//	while (true) {
 	sleep(5000);
-	var myElement = document.getElementById("7"); 
+	var myElement = document.getElementById("7");
 	var position = getPosition(myElement);
 	//alert("The image is located at: " + position.x + ", " + position.y);
 	//	}
@@ -73,8 +75,8 @@ function myMove() {
 	//clearInterval(id);
 	id = setInterval(frame, 15);
 	function frame() {
-			container = document.getElementById("background");
-		
+		container = document.getElementById("background");
+
 		var height = 0;
 		for (var i = 0; i < rows_to_fill_page; i++) {
 			row_id = "row" + i;
@@ -82,7 +84,7 @@ function myMove() {
 			height += row.offsetHeight;
 		}
 		var row_height = height/rows_to_fill_page;
-		document.getElementById("debugging").innerHTML = height + " " + pos + " " + rows_to_fill_page + " " + window.innerHeight;
+		//document.getElementById("debugging").innerHTML = height + " " + pos + " " + rows_to_fill_page + " " + window.innerHeight;
 		if (pos <= -height) {
 			// clearInterval(id);
 			//image_set_container.innerHTML = "";
@@ -92,7 +94,7 @@ function myMove() {
 			for (var i = 0; i < entries_to_move; i++){
 				indices[i] = indices[i+entries_to_move];
 				//indices.push(Math.floor(Math.random() * dir_array.length));
-		}
+			}
 			for (var i = 0; i < indices.length; i++) {
 				var img_id = "img" + i;
 				var image_container = document.getElementById(img_id);
@@ -101,9 +103,9 @@ function myMove() {
 				//alert(inner_index)
 				image_container.src = dir_array[inner_index];
 			}
-				//if (n_pictures >=24) {
-				//	break;
-				//}
+			//if (n_pictures >=24) {
+			//	break;
+			//}
 			pos = 0;
 			container.style.top = pos + 'px';
 			var new_entries = indices.length-entries_to_move;
@@ -114,16 +116,16 @@ function myMove() {
 				var seq_indices=[];
 				var j = 0;
 				if (i%2 == 0){
-				for (j = 0; j < images_in_db; j++) {
-					seq_indices.push(j);
-				}
+					for (j = 0; j < images_in_db; j++) {
+						seq_indices.push(j);
+					}
 					j = images_in_db;
-				while (j--) {
-					    k = Math.floor(Math.random() * (j+1));
-					    perm_indices.push(seq_indices[k]);
-					    seq_indices.splice(k,1);
-				}
-				indices.push(...perm_indices);
+					while (j--) {
+						k = Math.floor(Math.random() * (j+1));
+						perm_indices.push(seq_indices[k]);
+						seq_indices.splice(k,1);
+					}
+					indices.push(...perm_indices);
 				}
 			}
 			if (new_entries/6%2 == 1){
@@ -135,9 +137,9 @@ function myMove() {
 				}
 				j = 6
 				while (j--) {
-					    k = Math.floor(Math.random() * (j+1));
-					    perm_indices.push(seq_indices[k]);
-					    seq_indices.splice(k,1);
+					k = Math.floor(Math.random() * (j+1));
+					perm_indices.push(seq_indices[k]);
+					seq_indices.splice(k,1);
 				}
 				indices.push(...perm_indices);
 			}
@@ -195,7 +197,7 @@ function fillImageSetContainer(dir_array, height_array) {
 	var perm_indices = [];
 	var count_indices = 0;
 	while (!finished) {
-			//alert(window.innerHeight);
+		//alert(window.innerHeight);
 		if ( n_pictures%6 == 0) {
 			row_string += "<div id=row" + n_rows + " class='row'>\n";
 			n_rows++;
@@ -207,14 +209,14 @@ function fillImageSetContainer(dir_array, height_array) {
 			}
 			perm_indices=[];
 			while (i--) {
-				    j = Math.floor(Math.random() * (i+1));
-				    perm_indices.push(seq_indices[j]);
-				    seq_indices.splice(j,1);
+				j = Math.floor(Math.random() * (i+1));
+				perm_indices.push(seq_indices[j]);
+				seq_indices.splice(j,1);
 			}
 			count_indices = 0;
 			//}
 		}
-		indices.push(perm_indices[count_indices]);	
+		indices.push(perm_indices[count_indices]);
 		row_string += "<div class='column'>\n <img id='img" + n_pictures + "' src=" + dir_array[perm_indices[count_indices]] +" height=" + window.innerWidth/6*Math.sqrt(2) + " alt='Nature' onclick='myFunction(this);'>\n </div>\n";
 		if ( n_pictures%6 == 5) {
 			row_string += "</div>";
@@ -228,7 +230,7 @@ function fillImageSetContainer(dir_array, height_array) {
 			page_almost_full = height > screen.height;*/
 			page_full = height > window.innerHeight;
 			second_page_full = height > 2*window.innerHeight;
-			finished = second_page_full && safety; 
+			finished = second_page_full && safety;
 			if (second_page_full) {
 				safety=true;
 			}
@@ -237,7 +239,7 @@ function fillImageSetContainer(dir_array, height_array) {
 				rows_to_fill_unset = false;
 
 			}
-			document.getElementById("debugging").innerHTML = height + " " + screen.height;
+			//document.getElementById("debugging").innerHTML = height + " " + screen.height;
 		}
 		n_pictures++;
 		count_indices++;
@@ -251,9 +253,17 @@ function fillImageSetContainer(dir_array, height_array) {
 function dropdown_menu() {
 
 	var menu_dropdown = document.getElementById("menu_dropdown")
+	var search_dropdown = document.getElementById("search_dropdown")
+	var result_dropdown = document.getElementById("result_dropdown")
 	var pos1 = menu_dropdown.offsetTop;
 	//alert(menu_dropdown.style.top)
 
+	if (search_dropdown_toggle) {
+		search_dropdown.style.top = -search_dropdown.offsetHeight + "px";
+		search_dropdown_toggle = false
+		result_dropdown.style.top = -result_dropdown.offsetHeight + "px";
+		result_dropdown_toggle = false
+	}
 	if (project_dropdown_toggle){
 		menu_dropdown.style.top = -menu_dropdown.offsetHeight + "px";
 		project_dropdown_toggle = false
@@ -279,7 +289,97 @@ function fillDropdownMenu(project_names, project_ids) {
 	menu_dropdown.innerHTML = "";
 	num_projects = project_names.length
 	for (var i = 0; i<num_projects; i++ ) {
-		link="location.href='project.php?project_id=" + project_ids[i] + "';"
+		link="location.href='project.php?project_id=" + project_ids[i] + "&num_projects=" + num_projects + "';"
 		menu_dropdown.innerHTML += "<div onclick="+link+" class= menu_dropdown_button> \n <p>" + project_names[i] +"</p> \n </div>"
 	}
 }
+function dropdown_result() {
+
+	var menu_dropdown = document.getElementById("menu_dropdown")
+	var search_dropdown = document.getElementById("search_dropdown")
+	var result_dropdown = document.getElementById("result_dropdown")
+	var pos1 = search_dropdown.offsetTop;
+	//alert(menu_dropdown.style.top)
+
+	if (project_dropdown_toggle) {
+		menu_dropdown.style.top = -menu_dropdown.offsetHeight + "px";
+		project_dropdown_toggle = false
+	}
+	if (result_dropdown_toggle){
+		result_dropdown.style.top = -result_dropdown.offsetHeight + "px";
+		result_dropdown_toggle = false
+	}
+	id1 = setInterval(frame, 15);
+	function frame() {
+		pos1 = result_dropdown.offsetTop
+		if (pos1 < 0) {
+			pos1 = pos1 + 7;
+			result_dropdown.style.top = pos1 + "px";
+		} else {
+			clearInterval(id1);
+		}
+	}
+	result_dropdown_toggle = true
+
+
+}
+function dropdown_search() {
+
+	var menu_dropdown = document.getElementById("menu_dropdown")
+	var search_dropdown = document.getElementById("search_dropdown")
+	var result_dropdown = document.getElementById("result_dropdown")
+	var pos1 = search_dropdown.offsetTop;
+	//alert(menu_dropdown.style.top)
+
+	if (project_dropdown_toggle) {
+		menu_dropdown.style.top = -menu_dropdown.offsetHeight + "px";
+		project_dropdown_toggle = false
+	}
+	if (search_dropdown_toggle){
+		search_dropdown.style.top = -search_dropdown.offsetHeight + "px";
+		search_dropdown_toggle = false
+		result_dropdown.style.top = -result_dropdown.offsetHeight + "px";
+		result_dropdown_toggle = false
+	} else {
+		id1 = setInterval(frame, 15);
+		function frame() {
+			pos1 = search_dropdown.offsetTop
+			if (pos1 < 0) {
+				pos1 = pos1 + 7;
+				search_dropdown.style.top = pos1 + "px";
+			} else {
+				clearInterval(id1);
+			}
+		}
+		search_dropdown_toggle = true
+	}
+
+}
+
+function fillResultDropdown(results) {
+
+	var result_dropdown = document.getElementById("result_dropdown");
+	result_dropdown.innerHTML = "";
+	num_projects = project_names.length
+	for (var i in results) {
+		var proj_id = project_ids.indexOf(results[i])
+		var proj_name = project_names[proj_id]
+		var link="location.href='project.php?project_id=" + results[i] + "&num_projects=" + num_projects + "';"
+		result_dropdown.innerHTML += "<div onclick="+link+" class= result_dropdown_button> \n <p>" + proj_name +"</p> \n </div>"
+	}
+}
+
+function submitEvent() {
+	event.preventDefault();
+	var keyword = document.getElementById("keyword");
+	console.log(keyword.value);
+	var data = new URLSearchParams();
+  	data.append('keyword', keyword.value);
+  	var result;
+  	fetch("search.php", {method: 'post', body:data})
+		.then(res => res.text())
+		.then(text => text.split(","))
+		.then(arr => fillResultDropdown(arr))
+		.then(() =>dropdown_result())
+}
+

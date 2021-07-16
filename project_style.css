@@ -27,3 +27,47 @@
     transform: translateY(-50%);
     margin: 5%;
 }
+.controls {
+    z-index: 3;
+    background-color: black;
+
+}
+#right_arrow {
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 5%;
+    z-index: 3;
+      background-color: transparent;
+    opacity: 0.8;
+}
+#right_arrow:hover{
+    opacity: 1.0;
+}
+#left_arrow {
+    position: absolute;
+    top: 0;
+    right:6%;
+    width: 5%;
+    z-index: 3;
+      background-color: transparent;
+    transform: rotate(180deg);
+    opacity: 0.8;
+}
+#left_arrow:hover{
+    opacity: 1.0;
+
+
+}
+#home_button {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 5%;
+    z-index: 5;
+    background-color: transparent;
+    opacity: 0.8;
+}
+#home_button:hover{
+    opacity: 1.0;
+}

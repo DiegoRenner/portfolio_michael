@@ -20,7 +20,7 @@ if ($dbconnect->connect_error) {
     die("Database connection failed: " . $dbconnect->connect_error);
 }
 ?>
-<p id=debugging> </p>
+<!-- <p id=debugging> </p> -->
 <div class=container>
     <div class=main_menu>
 			<span onclick="dropdown_menu()" class="menu_button left">
@@ -29,12 +29,22 @@ if ($dbconnect->connect_error) {
         <div onclick="location.href='biography.php';" class="menu_button right">
             <p> Biography </p>
         </div>
-        <div class="menu_button center">
+        <div onclick="dropdown_search()" class="menu_button center">
             <p> Search </p>
         </div>
     </div>
     <div class="dropdown_container">
         <div id="menu_dropdown" class=menu_dropdown>
+        </div>
+        <div id="search_dropdown" class=search_dropdown>
+            <form class="form-inline" onsubmit="submitEvent()">
+                    <input type="text" name="searchbar" id="keyword" maxlength="10000">
+                    <button onclick=submitEvent()>Search</button>
+            </form>
+        </div>
+        <div class="result_dropdown_container">
+            <div id="result_dropdown" class=result_dropdown>
+            </div>
         </div>
     </div>
     <div id="background" class=sliding_background>
@@ -86,6 +96,7 @@ if ($dbconnect->connect_error) {
 
     fillImageSetContainer(dir_array, height_array);
     fillDropdownMenu(project_names,project_ids)
+    //fillSearchMenu(project_names,project_ids)
     //setInterval(updatePosition(),500);
     myMove();
 </script>

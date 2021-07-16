@@ -8,6 +8,17 @@
 </head>
 <body>
 <?php
+$num_projects = $_GET["num_projects"];
+$next_project = ($_GET["project_id"])%$num_projects+1;
+$prev_project = ($_GET["project_id"])%$num_projects-1;
+if ($prev_project< 1){
+    $prev_project += $num_projects;
+}
+echo "<img onclick=\"location.href='project.php?project_id=".$next_project."&num_projects=".$num_projects."'\" id=\"right_arrow\" src=\"images/right_arrow.png\">";
+echo "<img onclick=\"location.href='project.php?project_id=".$prev_project."&num_projects=".$num_projects."'\" id=\"left_arrow\" src=\"images/right_arrow.png\">";
+?>
+<img onclick="location.href='index.php'" id="home_button" src="images/home.png">
+<?php
 
 $hostname = "localhost";
 $username = "admin";
@@ -58,6 +69,7 @@ if ($dbconnect->connect_error) {
         }
         ?>
     ];
+    var num_projects = text_dir.length
     init_image(project_images)
     //set_text(text_dir)
 </script>
