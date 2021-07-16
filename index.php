@@ -26,7 +26,7 @@ if ($dbconnect->connect_error) {
 			<span onclick="dropdown_menu()" class="menu_button left">
 				<p> Projects </p>
 			</span>
-        <div class="menu_button right">
+        <div onclick="location.href='biography.php';" class="menu_button right">
             <p> Biography </p>
         </div>
         <div class="menu_button center">
